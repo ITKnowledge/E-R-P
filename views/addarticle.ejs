@@ -1,0 +1,160 @@
+<% include header.ejs %>
+<!-- =============================================== -->
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      <%= title %>
+      <small>Ajout de article</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li class=""><a href="/index"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li class=""><a href="/articles"><i class="fa fa-dashboard"></i> liste des Articles</a></li>
+      <li class="active"> Ajout Article</a></li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+
+    <!-- Default box -->
+    <div class="box">
+      <div class="box-header with-border">
+        <h3 class="box-title">Nouveau <%= title %></h3>
+
+      </div>
+      <div class="box-body">
+
+        <!--
+        - Code
+        - Designation
+        - Type (Matière premier (MP) ou produit fini (PF))
+        - Prix unitaire
+        - Famille
+        - Sous famille
+        - TVA (7, 14 ou 20%)
+      -->
+
+        <form class="form-horizontal" action="/articles/add" method="post">
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="" class="col-sm-2 control-label">Code :</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="code" class="form-control" id="" placeholder="" value="<%= articles == null ? "":articles.code %>">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="" class="col-sm-2 control-label">Designation :</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="designation" class="form-control" id="" placeholder="" value="<%= articles == null ? "":articles.designation %>">
+                  </div>
+                </div>
+
+                <!-- <div class="form-group">
+                  <label for="" class="col-sm-2 control-label">Type :</label>
+                  <div class="col-sm-10">
+                    <textarea type="text" name="type" class="form-control" id="" placeholder="" rows="4" cols="20" value=""><%= articles == null ? "":articles.type %></textarea>
+                  </div>
+                </div> -->
+
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">type :</label>
+                  <div class="col-sm-10">
+                      <select name="type" class="form-control select2">
+                          <option value="">Selectionner un article ...</option>
+                            <option value="MP">Matiere premiere MP</option>
+                            <option value="MF">Matiere finie MF</option>
+                      </select>
+                  </div>
+                </div>
+
+
+
+                <div class="form-group">
+                  <label for="" class="col-sm-2 control-label">Prix unitaire :</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="prixunite" class="form-control" id="" placeholder="" value="<%= articles == null ? "":articles.prixunite.toFixed(2); %>">
+                  </div>
+                </div>
+
+
+
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Nom de la famille :</label>
+                  <div class="col-sm-10">
+                      <select id="famille" name="famille" class="form-control select2">
+                          <option value="">Selectionner une famille ...</option>
+                          <% for(var i=0; i<familles.length; i++){%>
+                            <option value="<%= familles[i].nom + " | " + familles[i].code %>"><%= familles[i].nom %></option>
+                          <%}%>
+                      </select>
+                  </div>
+                </div>
+
+
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Nom de la Sous famille :</label>
+                  <div class="col-sm-10">
+                      <select id="sousfamille" name="sousfamille" class="form-control select2">
+                          <option value="">Selectionner une Sous famille ...</option>
+                          <% for(var i=0; i<sousfamilles.length; i++){%>
+                            <option value="<%= sousfamilles[i].famille + " | " + sousfamilles[i].code + " | " + sousfamilles[i].nom %>"><%= sousfamilles[i].nom %></option>
+                          <%}%>
+                      </select>
+                  </div>
+                </div>
+
+
+                <div class="form-group">
+                  <label for="" class="col-sm-2 control-label">TVA :</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="tva" class="form-control" id="" placeholder="" value="<%= articles == null ? "":articles.tva %>">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10">
+                  </div>
+                </div>
+              </div>
+              <!-- /.box-body -->
+
+        <!-- Start creating your amazing application! -->
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer">
+          <button type="submit" class="btn btn-sm btn-primary pull-right mymg"><i class="fa fa-fw fa-save"></i></button>
+          <!-- <a href="#" class="btn btn-sm btn-primary pull-right mymg"><i class="fa fa-fw fa-save"></i></a> -->
+          <a href="/articles" class="btn btn-sm btn-primary pull-right mymg">Liste des <%= title %></a>
+      </div>
+      <!-- /.box-footer-->
+      </form>
+    </div>
+    <!-- /.box -->
+
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+
+<% include footer.ejs %>
+
+
+<script >
+$(document).ready(function(){
+  var sousfamille = $('#sousfamille option').clone();
+  //  $('#sousfamille').empty();
+ $('#famille').change(function() {
+     var val = $(this).val().split("|")[0];
+     $('#sousfamille').empty();
+     sousfamille.filter(function(idx, el) {
+         return val === 'ALL' || $(el).val().indexOf(val) >= 0;
+     }).appendTo('#sousfamille');
+ });
+
+})
+</script>

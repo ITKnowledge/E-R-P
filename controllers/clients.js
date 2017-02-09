@@ -3,6 +3,7 @@ var Clients = require('../models/client');
 var router = express.Router();
 
 
+
 var isAuthenticated = function (req, res, next) {
 	if (req.isAuthenticated())
 		return next();
@@ -13,7 +14,6 @@ router.get('/', isAuthenticated, function(req, res, next) {
   Clients.find(function(err, clients){
 		res.render('clients', {user: req.user, title: "Clients", clients: clients});
 	});
-
 });
 
 
