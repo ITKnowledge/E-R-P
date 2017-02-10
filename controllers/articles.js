@@ -90,7 +90,7 @@ router.post('/edit/:id', isAuthenticated, function(req, res, next){
 														console.log('GET Error: There was a problem retrieving: ' + err);
 														res.redirect('/articles');
 													}else{
-														res.redirect("/articles/edit/" + articles._id);
+														res.redirect("/articles");
 													}
 										})
 
