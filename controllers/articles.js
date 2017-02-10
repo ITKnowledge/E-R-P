@@ -65,9 +65,12 @@ router.get('/delete/:id', isAuthenticated, function(req, res, next){
 
 router.get('/edit/:id', isAuthenticated, function(req, res, netx){
 			Articles.findById(req.params.id, function(err, article){
+				var familleactuelle = article.famille;
+				var sousfamilleactuelle = article.sousfamille;
+				var acttype = article.type;
 				Familles.find(function(err, familles){
 					Sousfamilles.find(function(err, sousfamilles){
-						res.render('editarticle', {user: req.user, title: "Articles", familles: familles, sousfamilles: sousfamilles, articles: article, mode:"edit"});
+						res.render('editarticle', {user: req.user, title: "Articles", acttype: acttype, actfamille: familleactuelle, actsousfamille: sousfamilleactuelle, familles: familles, sousfamilles: sousfamilles, articles: article, mode:"edit"});
 					})
 
 				})
