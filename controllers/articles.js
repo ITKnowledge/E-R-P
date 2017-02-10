@@ -65,7 +65,13 @@ router.get('/delete/:id', isAuthenticated, function(req, res, next){
 
 router.get('/edit/:id', isAuthenticated, function(req, res, netx){
 			Articles.findById(req.params.id, function(err, article){
-				res.render('editclient', {user: req.user, title: "Articles", articles: article, mode:"edit"});
+				Familles.find(function(err, familles){
+					Sousfamilles.find(function(err, sousfamilles){
+						res.render('editarticle', {user: req.user, title: "Articles", familles: familles, sousfamilles: sousfamilles, articles: article, mode:"edit"});
+					})
+
+				})
+
 			});
 });
 
