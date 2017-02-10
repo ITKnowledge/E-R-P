@@ -1,0 +1,1 @@
+{"_id":{"$oid":"579fc9ea059f7c810a3cf822"},"lastName":"Bellioum","firstName":"Karim","email":"kbellioum@gmail.com","password":"$2a$10$aCFbWl/Ts3PRJyZCNu4f5uPeMdVKfJlwH8RmhEs3Q28IDbfGN9puy","username":"kbellioum","role":"Administrateur","permissions":{"gp":true,"gs":true,"su":true},"__v":0}

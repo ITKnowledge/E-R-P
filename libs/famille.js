@@ -49,7 +49,7 @@ Famille.prototype.updsousfamille = function(rec, oldfamille, newfamille){
     { famille: newfamille },{ multi: true },
     function(err, data){
     if (err) {
-          console.log('GET Error: There was a problem retrieving: ' + err);
+        console.log('GET Error: There was a problem retrieving: ' + err);
         }
         else {
         console.log("UPDATE DES SOUS FAMILLES REUSSI");
