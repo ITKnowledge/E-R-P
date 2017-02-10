@@ -80,10 +80,11 @@ router.post('/edit/:id', isAuthenticated, function(req, res, next){
 	Articles.findById(req.params.id, function (err, articles) {
 					articles.update({
 										code: req.body.code,
-										raisonsocial: req.body.raisonsocial,
-										phone: req.body.phone,
-										address: req.body.address,
-										email: req.body.email
+										designation: req.body.designation,
+										type: req.body.type,
+										famille: req.body.famille.split("|")[0],
+										sousfamille: req.body.sousfamille.split("|")[2],
+										tva: req.body.tva
 									},function (err, articlesID){
 													if(err){
 														console.log('GET Error: There was a problem retrieving: ' + err);
