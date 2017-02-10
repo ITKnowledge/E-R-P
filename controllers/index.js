@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var core = require('./core.js');
+var core = require('../libs/core.js');
 var Core = new core();
 
 

@@ -3,6 +3,7 @@ var Clients = require('../models/client');
 
 
 
+
 var Core = function(){
   this.version = "0.1";
   this.clients;
@@ -37,6 +38,7 @@ Core.prototype.set = function () {
 Core.prototype.setClients = function (clients) {
     this.clients = clients;
 };
+
 
 
 
