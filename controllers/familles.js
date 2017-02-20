@@ -11,29 +11,29 @@ var isAuthenticated = function (req, res, next) {
 	res.redirect('/');
 }
 
-// router.get('/libs', function(req, res, next){
-//
-// 	var family = new core();
-//
-// 	family.setCode("jsjsjsj");
-// 	var tab = [];
-// 	// console.log(family.getRec(Familles));
-// 	family.updsousfamille(Sousfamilles, 'Tapies', 'Jaky');
-//
-// 	family.getRec(Sousfamilles,'Jaky').exec(function(err,result){
-//
-//    if(err)
-//       return console.log(err);
-//    result.forEach(function(resultone){
-//       console.log(resultone.nom);
-// 			tab.push(resultone);
-//       });
-// 			res.send(tab);
-//     });
-//
-//
-//
-// });
+router.get('/libs', function(req, res, next){
+
+	var family = new core();
+
+	family.setCode("jsjsjsj");
+	var tab = [];
+	// console.log(family.getRec(Familles));
+	family.updsousfamille(Sousfamilles, 'Jaky', 'Tapie');
+
+	family.getRec(Sousfamilles,'Tapie').exec(function(err,result){
+
+   if(err)
+      return console.log(err);
+   result.forEach(function(resultone){
+      console.log(resultone.nom);
+			tab.push(resultone);
+      });
+			res.send(tab);
+    });
+
+
+
+});
 
 router.get('/', isAuthenticated, function(req, res, next) {
   Familles.find(function(err, familles){
