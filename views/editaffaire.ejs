@@ -38,21 +38,21 @@
                 <div class="form-group">
                   <label for="" class="col-sm-2 control-label">Libelle :</label>
                   <div class="col-sm-10">
-                    <input type="text" name="libelle" class="form-control" id="" placeholder="" value="<%= affaires == null ? "":affaires.libelle %>">
+                    <input type="text" name="libelle" required="required" class="form-control" id="" placeholder="" value="<%= affaires == null ? "":affaires.libelle %>">
                   </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group date">
                   <label for="" class="col-sm-2 control-label">Date de début :</label>
                   <div class="col-sm-10">
-                    <input type="text" name="datedebut" class="form-control" id="" placeholder="" value="<%= affaires == null ? "":affaires.datedebut %>">
+                    <input type="text" name="datedebut" required="required" class="form-control" id="datepicker" placeholder="" value="<%= affaires == null ? "":affaires.datedebut %>">
                   </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group date">
                   <label for="" class="col-sm-2 control-label">Date de fin :</label>
                   <div class="col-sm-10">
-                    <input type="text" name="datefin" class="form-control" id="" placeholder="" value="<%= affaires == null ? "":affaires.datefin %>">
+                    <input type="text" name="datefin" required="required" class="form-control" id="datepicker2" placeholder="" value="<%= affaires == null ? "":affaires.datefin %>">
                   </div>
                 </div>
 
@@ -76,7 +76,7 @@
       <div class="box-footer">
           <button type="submit" class="btn btn-sm btn-primary pull-right mymg"><i class="fa fa-fw fa-save"></i></button>
           <!-- <a href="#" class="btn btn-sm btn-primary pull-right mymg"><i class="fa fa-fw fa-save"></i></a> -->
-          <a href="/clients" class="btn btn-sm btn-primary pull-right mymg">Liste des <%= title %></a>
+          <a href="/affaires" class="btn btn-sm btn-primary pull-right mymg">Liste des <%= title %></a>
       </div>
       <!-- /.box-footer-->
       </form>
@@ -90,3 +90,21 @@
 
 
 <% include footer.ejs %>
+
+
+<script>
+  $(function () {
+
+
+    //Date picker
+    $('#datepicker').datepicker({
+      autoclose: true
+    });
+
+    $('#datepicker2').datepicker({
+      autoclose: true
+    });
+
+
+  });
+</script>
