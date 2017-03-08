@@ -2,6 +2,8 @@ var express = require('express');
 var Articles = require('../models/article');
 var Familles = require('../models/famille');
 var Sousfamilles = require('../models/sousfamille');
+var Tva = require('../models/tva');
+
 var router = express.Router();
 
 
@@ -14,7 +16,9 @@ var isAuthenticated = function (req, res, next) {
 
 router.get('/', isAuthenticated, function(req, res, next) {
   Articles.find(function(err, articles){
-		res.render('articles', {user: req.user, title: "Article", articles: articles});
+    Tva.find(function(err, tvas){
+			res.render('articles', {user: req.user, title: "Article", articles: articles, tva: tvas});
+		});
 	});
 });
 
@@ -22,9 +26,11 @@ router.get('/', isAuthenticated, function(req, res, next) {
 router.get('/add', isAuthenticated, function(req, res, next) {
 	Familles.find(function(err, familles){
 		Sousfamilles.find(function(err, sousfamilles){
-			res.render('addarticle', {user: req.user, title: "Article", familles: familles, sousfamilles: sousfamilles,articles: null, mode:"add"});
-		})
-	})
+			Tva.find(function(err, tvas){
+			res.render('addarticle', {user: req.user, tva: tvas, title: "Article", familles: familles, sousfamilles: sousfamilles,articles: null, mode:"add"});
+			});
+		});
+	});
 
 });
 
@@ -37,7 +43,7 @@ router.post('/add', isAuthenticated, function(req, res, next){
 	article.famille = req.body.famille.split("|")[0];
 	article.sousfamille = req.body.sousfamille.split("|")[2];
 	article.type = req.body.type;
-	article.tva = req.body.tva;
+	article.tva = req.body.tva.split("|")[1];
 
 
 	article.save(function(err) {
