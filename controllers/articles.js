@@ -74,9 +74,13 @@ router.get('/edit/:id', isAuthenticated, function(req, res, netx){
 				var familleactuelle = article.famille;
 				var sousfamilleactuelle = article.sousfamille;
 				var acttype = article.type;
+				var acttva = article.tva;
 				Familles.find(function(err, familles){
 					Sousfamilles.find(function(err, sousfamilles){
-						res.render('editarticle', {user: req.user, title: "Articles", acttype: acttype, actfamille: familleactuelle, actsousfamille: sousfamilleactuelle, familles: familles, sousfamilles: sousfamilles, articles: article, mode:"edit"});
+						Tva.find(function(err, tvas){
+							res.render('editarticle', {user: req.user, title: "Articles", tva: tvas, acttva: acttva, acttype: acttype, actfamille: familleactuelle, actsousfamille: sousfamilleactuelle, familles: familles, sousfamilles: sousfamilles, articles: article, mode:"edit"});
+						})
+
 					})
 
 				})
@@ -93,7 +97,7 @@ router.post('/edit/:id', isAuthenticated, function(req, res, next){
 										type: req.body.type,
 										famille: req.body.famille.split("|")[0],
 										sousfamille: req.body.sousfamille.split("|")[2],
-										tva: req.body.tva
+										tva: req.body.tva.split("|")[1]
 									},function (err, articlesID){
 													if(err){
 														console.log('GET Error: There was a problem retrieving: ' + err);
