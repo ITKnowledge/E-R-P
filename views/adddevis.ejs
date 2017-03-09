@@ -1,0 +1,150 @@
+<% include header.ejs %>
+<!-- =============================================== -->
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      <%= title %>
+      <small>Ajout de devis</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li class=""><a href="/index"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li class=""><a href="/devis"><i class="fa fa-dashboard"></i> liste des devis</a></li>
+      <li class="active"> Ajout Devis</a></li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+
+    <!-- Default box -->
+    <div class="box">
+      <div class="box-header with-border">
+        <h3 class="box-title">Nouveau <%= title %></h3>
+
+      </div>
+      <div class="box-body">
+
+        <!--
+        - Nature du document (Devis)
+        - N°
+        - Date de création
+        - Prix total
+        - Fournisseur
+        - Numero devis fournisseur
+        - Date livraison prevu
+        -->
+
+        <form class="form-horizontal" action="/devis/add" method="post">
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="" class="col-sm-2 control-label">Nature :</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="nature" required="required" class="form-control" id="" placeholder="" value="<%= devis == null ? "":devis.nature %>">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="" class="col-sm-2 control-label">Numero :</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="numero" class="form-control" id="" placeholder="" value="<%= devis == null ? "":devis.numero %>">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="" class="col-sm-2 control-label">Date de création :</label>
+                  <div class="col-sm-10">
+                    <input id="datepicker" type="text" name="datecreation" class="form-control" id="" placeholder="" rows="4" cols="20" value=""><%= devis == null ? "":devis.datecreation %></input>
+                  </div>
+                </div>
+
+
+
+
+                <div class="form-group">
+                  <label for="" class="col-sm-2 control-label">Prix total :</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="prixtotal" required="required" class="form-control" id="" placeholder="" value="<%= devis == null ? "":devis.prixtotal.toFixed(2); %>">
+                  </div>
+                </div>
+
+
+
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Fournisseurs :</label>
+                  <div class="col-sm-10">
+                      <select id="fournisseur" name="fournisseur" required="required" class="form-control select2">
+                          <option value="">Selectionner un fournisseur ...</option>
+                          <% for(var i=0; i<fournisseurs.length; i++){%>
+                            <option value="<%= fournisseurs[i].raisonsocial + " | " + fournisseurs[i].code %>"><%= fournisseurs[i].raisonsocial %></option>
+                          <%}%>
+                      </select>
+                  </div>
+                </div>
+
+
+
+
+                <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10">
+                  </div>
+                </div>
+              </div>
+              <!-- /.box-body -->
+
+        <!-- Start creating your amazing application! -->
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer">
+          <button type="submit" class="btn btn-sm btn-primary pull-right mymg"><i class="fa fa-fw fa-save"></i></button>
+          <!-- <a href="#" class="btn btn-sm btn-primary pull-right mymg"><i class="fa fa-fw fa-save"></i></a> -->
+          <a href="/devis" class="btn btn-sm btn-primary pull-right mymg">Liste des <%= title %></a>
+      </div>
+      <!-- /.box-footer-->
+      </form>
+    </div>
+    <!-- /.box -->
+
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+
+<% include footer.ejs %>
+
+
+<script >
+$(document).ready(function(){
+  var sousfamille = $('#sousfamille option').clone();
+  //  $('#sousfamille').empty();
+ $('#famille').change(function() {
+     var val = $(this).val().split("|")[0];
+     $('#sousfamille').empty();
+     sousfamille.filter(function(idx, el) {
+         return val === 'ALL' || $(el).val().indexOf(val) >= 0;
+     }).appendTo('#sousfamille');
+ });
+
+})
+</script>
+
+
+<script>
+  $(function () {
+
+
+    //Date picker
+    $('#datepicker').datepicker({
+      autoclose: true
+    });
+
+    $('#datepicker2').datepicker({
+      autoclose: true
+    });
+
+
+  });
+</script>

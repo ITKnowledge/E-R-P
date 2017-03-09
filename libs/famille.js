@@ -30,7 +30,6 @@ Famille.prototype.setRr = function (tmp) {
   this.rr = tmp;
 };
 
-
 Famille.prototype.getObservation = function () {
   return this.observation;
 };
@@ -56,9 +55,6 @@ Famille.prototype.updsousfamille = function(rec, oldfamille, newfamille){
         }
   });
 };
-
-
-
 
 
 module.exports = Famille;

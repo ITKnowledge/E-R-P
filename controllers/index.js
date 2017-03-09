@@ -5,13 +5,13 @@ var core = require('../libs/core.js');
 var Core = new core();
 
 
-console.log(Core.get());
-console.log(Core.set());
-console.log("la version est : " + Core.getver());
-
-console.log(Core.getClients());
-console.log(Core.getClients());
-console.log(Core.getClients());
+// console.log(Core.get());
+// console.log(Core.set());
+// console.log("la version est : " + Core.getver());
+//
+// console.log(Core.getClients());
+// console.log(Core.getClients());
+// console.log(Core.getClients());
 
 
 
