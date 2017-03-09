@@ -134,12 +134,14 @@ $(document).ready(function(){
 
 <script>
   $(function () {
-    var dt = new Date().toISOString();
 
-    $("#datepicker").val(dt.substring(0,10).split("-").reverse().join("/"));
+    // var dt = new Date().toISOString();
+
+    $("#datepicker").val(new Date().toISOString().substring(0,10).split("-").reverse().join("/"));
     //Date picker
     $('#datepicker').datepicker({
-      autoclose: true
+      autoclose: true,
+      format: 'dd/mm/yyyy'
     });
 
     $('#datepicker2').datepicker({
