@@ -17,7 +17,7 @@ var Core = new core();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Index' });
+  res.render('lib', { title: 'lib' });
 });
 
 module.exports = router;

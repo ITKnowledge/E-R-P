@@ -37,6 +37,11 @@ module.exports = function(passport){
 		res.render('index', { user: req.user });
 	});
 
+	router.get('/lib', isAuthenticated, function(req, res){
+		res.render('lib', { user: req.user });
+	});
+
+
 	router.get('/signout', function(req, res) {
 		req.logout();
 		res.redirect('/');

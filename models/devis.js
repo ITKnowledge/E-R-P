@@ -5,7 +5,7 @@ module.exports = mongoose.model('Devis',{
 	numero: String,
 	datecreation: String,
   datelivraisonprevu: String,
-  prixtotal: Number,
+  prixtotal: { type: Number, default: 0 },
   numerodevisfournisseur: String,
   fournisseur: String
 });
