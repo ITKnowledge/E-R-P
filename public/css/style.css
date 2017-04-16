@@ -1,3 +1,9 @@
 .mymg {
   margin: 2px;
 }
+
+legend {
+
+    margin-bottom: 0px; 
+
+}

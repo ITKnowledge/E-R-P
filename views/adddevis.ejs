@@ -38,82 +38,86 @@
         - Date livraison prevu
         -->
 
-        <form class="form-horizontal" action="/devis/add" method="post">
-
-              <!-- Box-body -->
-              <!--<div class="box-body">-->
-                <div class="form-group">
-                  <label for="" class="col-sm-2 control-label">Nature :</label>
-                  <div class="col-sm-10">
-                    <input type="text" name="nature" required="required" class="form-control" id="" placeholder="" value="<%= devis == null ? "":devis.nature %>">
-                  </div>
+        <form class="grid-form" action="/devis/add" method="post">
+            <fieldset>
+              <legend>Informations sur le Devis</legend>
+              <div data-row-span="4">
+                <div data-field-span="1">
+                  <label for="" class="control-label">Nature :</label>
+                  <input type="text" name="nature" required="required" class="form-control" id="" placeholder="" value="<%= devis == null ? "":devis.nature %>">
                 </div>
-
-                <div class="form-group">
-                  <label for="" class="col-sm-2 control-label">Numero :</label>
-                  <div class="col-sm-10">
-                    <input type="text" name="numero" class="form-control" id="" placeholder="" value="<%= devis == null ? "":devis.numero %>">
-                  </div>
+                <div data-field-span="3">
+                  <label for="" class="control-label">Numero :</label>
+                  <input type="text" name="numero" class="form-control" id="" placeholder="" value="<%= devis == null ? "":devis.numero %>">
                 </div>
-
-
-
-                <div class="form-group">
-                  <label for="" class="col-sm-2 control-label">Date de création :</label>
-                  <div class="col-sm-10">
-                    <input id="datepicker" type="text" name="datecreation" class="form-control" id="" placeholder="" value="<%= devis == null ? "":devis.datecreation %>">
-                  </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <div data-row-span="2">
+                <div data-field-span="1">
+                  <label for="" class="control-label">Date de création :</label>
+                  <input id="datepicker" type="text" name="datecreation" class="form-control" id="" placeholder="" value="<%= devis == null ? "":devis.datecreation %>">
                 </div>
-
-
-
-                <div class="form-group">
-                  <label for="" class="col-sm-2 control-label">Date de livraison prévue :</label>
-                  <div class="col-sm-10">
-                    <input id="datepicker2" type="text" name="datelivraisonprevu" class="form-control" id="" placeholder="" value="<%= devis == null ? "":devis.datelivraisonprevu %>">
-                  </div>
+                <div data-field-span="1">
+                  <label for="" class="control-label">Date de livraison prévue :</label>
+                  <input id="datepicker2" type="text" name="datelivraisonprevu" class="form-control" id="" placeholder="" value="<%= devis == null ? "":devis.datelivraisonprevu %>">
                 </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <!-- <legend>Informations fournisseur</legend> -->
+            <div data-row-span="2">
+              <div data-field-span="1">
+                <label class="col-sm control-label">Fournisseurs :</label>
+                <select id="fournisseur" name="fournisseur" required="required" class="form-control select2">
+                    <option value="">Selectionner un fournisseur ...</option>
+                    <% for(var i=0; i<fournisseurs.length; i++){%>
+                      <option value="<%= fournisseurs[i].raisonsocial + " | " + fournisseurs[i].code %>"><%= fournisseurs[i].raisonsocial %></option>
+                    <%}%>
+                </select>
+              </div>
+              <div data-field-span="1">
+                <label for="" class="control-label">N° devis fournisseur  :</label>
+                <input type="text" name="numerodevisfournisseur" class="form-control" id="" placeholder="" value="<%= devis == null ? "":devis.numerodevisfournisseur %>">
+              </div>
+            </div>
+          </fieldset>
 
 
 
-                <!-- <div class="form-group">
-                  <label for="" class="col-sm-2 control-label">Prix total :</label>
-                  <div class="col-sm-10">
-                    <input type="text" name="prixtotal" required="required" class="form-control" id="" placeholder="" value="<%= devis == null ? "":devis.prixtotal.toFixed(2); %>">
-                  </div>
-                </div> -->
 
-                <div class="form-group">
-                  <label class="col-sm-2 control-label">Fournisseurs :</label>
-                  <div class="col-sm-10">
-                      <select id="fournisseur" name="fournisseur" required="required" class="form-control select2">
-                          <option value="">Selectionner un fournisseur ...</option>
-                          <% for(var i=0; i<fournisseurs.length; i++){%>
-                            <option value="<%= fournisseurs[i].raisonsocial + " | " + fournisseurs[i].code %>"><%= fournisseurs[i].raisonsocial %></option>
-                          <%}%>
-                      </select>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="" class="col-sm-2 control-label">N° devis fournisseur  :</label>
-                  <div class="col-sm-10">
-                    <input type="text" name="numerodevisfournisseur" class="form-control" id="" placeholder="" value="<%= devis == null ? "":devis.numerodevisfournisseur %>">
-                  </div>
-                </div>
+              <!-- <div class="col-md-12">
+                <button id="ok" class="btn btn-sm btn-primary pull-right mymg col-md-12" type="button" name="button">Valider</button>
+              </div> -->
 
 
 
-                <div class="form-group">
-                  <div class="col-sm-offset-2 col-sm-10">
 
-                  </div>
-                </div>
         </div>
               <!-- /.box-body -->
 
       <!--</div>-->
       <!-- /.box-body -->
+      <!-- <div class="box-header with-border">
+        <h3 class="box-title">Detail <%= title %></h3>
+
+      </div> -->
+
+      <!-- <div class="col-md">
+        <label for="code-art">Code article :</label>
+        <input name="code-art" type="text" class="col-sm">
+        <label for="designation">Designation article :</label>
+        <input name="designation" type="text" class="col-sm">
+        <label for="prix-unit">Prix Unitaire :</label>
+        <input name="prix-unit" type="text" class="col-sm">
+        <label for="quantite">Quantite :</label>
+        <input name="quantite" type="text" class="col-sm">
+        <label for="montant">Montant :</label>
+        <input name="montant" type="text" class="col-sm">
+
+
+      </div> -->
+
       <div class="box-body">
         <div id="jsGrid"></div>
       </div>
@@ -123,9 +127,9 @@
 
 
         <div class="box-footer">
-            <div id="valzone" class="">
+            <!-- <div id="valzone" class="">
               <button id="validateOne" class="btn btn-sm btn-primary pull-right mymg" type="button" name="button">OK</button>
-            </div>
+            </div> -->
 
             <div id="subform">
               <button type="submit" class="btn btn-sm btn-primary pull-right mymg"><i class="fa fa-fw fa-save"></i></button>
@@ -144,6 +148,9 @@
   </section>
   <!-- /.content -->
 
+
+
+
 </div>
 <!-- /.content-wrapper -->
 
@@ -153,37 +160,41 @@
 
 <script >
 $(document).ready(function(){
-  $("#subform").css("display", "none");
-
-  $("#validateOne").click(function(){
-    document.getElementById('valzone').style.display = "none";
-    document.getElementById('subform').style.display =  "";
-    console.log(clients);
-    clients.push({ "Name": "Ramona Benton", "Age": 32, "Country": 3, "Address": "Ap #614-689 Vehicula Street", "Married": false });
-
-    $("#jsGrid").jsGrid({
-
-        onItemUpdated: function(arg) {
-        //console.log("row updated");
-       //  console.log(tab[arg.itemIndex].prodqte);
-        // $('#message').val(JSON.stringify(tab));
-        },
-
-        onItemDeleted: function(arg) {
-        //console.log("row deleted");
-       //  totalqte = totalqte - tab[arg.itemIndex].prodqte;
-        // tab.splice(arg.itemIndex, 1);
-        // $('#message').val(JSON.stringify(tab));
-        },
-
-        onItemInserted: function() {
-        //console.log("row deleted");
-        // $('#message').val(JSON.stringify(tab));
-        }
-    });
-
-
+  $("#fournisseur").select2({
+      placeholder: "Select a state",
+      allowClear: true
   });
+  // $("#subform").css("display", "none");
+
+  // $("#validateOne").click(function(){
+  //   document.getElementById('valzone').style.display = "none";
+  //   document.getElementById('subform').style.display =  "";
+  //   console.log(clients);
+  //   clients.push({ "Name": "Ramona Benton", "Age": 32, "Country": 3, "Address": "Ap #614-689 Vehicula Street", "Married": false });
+  //
+  //   $("#jsGrid").jsGrid({
+  //
+  //       onItemUpdated: function(arg) {
+  //       //console.log("row updated");
+  //      //  console.log(tab[arg.itemIndex].prodqte);
+  //       // $('#message').val(JSON.stringify(tab));
+  //       },
+  //
+  //       onItemDeleted: function(arg) {
+  //       //console.log("row deleted");
+  //      //  totalqte = totalqte - tab[arg.itemIndex].prodqte;
+  //       // tab.splice(arg.itemIndex, 1);
+  //       // $('#message').val(JSON.stringify(tab));
+  //       },
+  //
+  //       onItemInserted: function() {
+  //       //console.log("row deleted");
+  //       // $('#message').val(JSON.stringify(tab));
+  //       }
+  //   });
+  //
+  //
+  // });
 
 
  //  var sousfamille = $('#sousfamille option').clone();
@@ -224,11 +235,11 @@ $(document).ready(function(){
 
 <script>
     var clients = [
-        { "Name": "Otto Clay", "Age": 25, "Country": 1, "Address": "Ap #897-1459 Quam Avenue", "Married": false },
-        { "Name": "Connor Johnston", "Age": 45, "Country": 2, "Address": "Ap #370-4647 Dis Av.", "Married": true },
-        { "Name": "Lacey Hess", "Age": 29, "Country": 3, "Address": "Ap #365-8835 Integer St.", "Married": false },
-        { "Name": "Timothy Henson", "Age": 56, "Country": 1, "Address": "911-5143 Luctus Ave", "Married": true },
-        { "Name": "Ramona Benton", "Age": 32, "Country": 3, "Address": "Ap #614-689 Vehicula Street", "Married": false }
+        // { "Name": "Otto Clay", "Age": 25, "Country": 1, "Address": "Ap #897-1459 Quam Avenue", "Married": false },
+        // { "Name": "Connor Johnston", "Age": 45, "Country": 2, "Address": "Ap #370-4647 Dis Av.", "Married": true },
+        // { "Name": "Lacey Hess", "Age": 29, "Country": 3, "Address": "Ap #365-8835 Integer St.", "Married": false },
+        // { "Name": "Timothy Henson", "Age": 56, "Country": 1, "Address": "911-5143 Luctus Ave", "Married": true },
+        // { "Name": "Ramona Benton", "Age": 32, "Country": 3, "Address": "Ap #614-689 Vehicula Street", "Married": false }
     ];
 
     var countries = [
@@ -250,11 +261,11 @@ $(document).ready(function(){
         data: clients,
 
         fields: [
-            { name: "Name", type: "text", width: 150, validate: "required" },
-            { name: "Age", type: "number", width: 50 },
-            { name: "Address", type: "text", width: 200 },
-            { name: "Country", type: "select", items: countries, valueField: "Id", textField: "Name" },
-            { name: "Married", type: "checkbox", title: "Is Married", sorting: false },
+            { name: "Code article", type: "text", width: 50, validate: "required" },
+            { name: "Désignation article", type: "text", width: 200 },
+            { name: "Prix unitaire", type: "number", width: 50 },
+            { name: "Quantité", type: "number", width: 50 },
+            { name: "Montant HT", type: "number", width: 50 },
             { type: "control" }
         ]
     });

@@ -27,7 +27,7 @@ router.get('/add', isAuthenticated, function(req, res, next) {
 
 router.post('/add', isAuthenticated, function(req, res, next){
 	var devis = new Devis();
-
+	
 	devis.nature = req.body.nature;
 	devis.numero = req.body.numero;
 	devis.datecreation = req.body.datecreation;
