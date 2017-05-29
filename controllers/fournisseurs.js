@@ -13,7 +13,12 @@ router.get('/', isAuthenticated, function(req, res, next) {
   Fournisseurs.find(function(err, fournisseurs){
 		res.render('fournisseurs', {user: req.user, title: "Fournisseurs", fournisseurs: fournisseurs});
 	});
+});
 
+router.get('/api-get', isAuthenticated, function(req, res, next) {
+  Fournisseurs.find(function(err, fournisseurs){
+		res.json(fournisseurs);
+	});
 });
 
 

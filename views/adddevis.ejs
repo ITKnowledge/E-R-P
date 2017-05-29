@@ -39,6 +39,7 @@
         -->
 
         <form class="grid-form" action="/devis/add" method="post">
+            <div class="block">
             <fieldset>
               <legend>Informations sur le Devis</legend>
               <div data-row-span="4">
@@ -84,16 +85,92 @@
           </fieldset>
 
 
+          </div>
+
+        <br>
+
+        <!-- Validate Button -->
+          <div class="col-md-12">
+            <button id="ok" class="btn btn-sm btn-primary pull-right mymg col-md-12" name="button">Valider</button>
+          </div>
 
 
-              <!-- <div class="col-md-12">
-                <button id="ok" class="btn btn-sm btn-primary pull-right mymg col-md-12" type="button" name="button">Valider</button>
-              </div> -->
+        <br>
+        <hr>
+
+        <section>
+          <div>
+            <div class="col-md-5 col-sm-5 col-xs-12 item form-group">
+              <label>Code article : </label>
+              <div class="">
+                <select id="articles" class="select2_single form-control" name="prodinfo" type="text">
+                  <option></option>
+                  <% for (var i = 0; i < articles.length; i++) {%>
+                    <option value="<%= articles[i].code + ' | ' + articles[i].designation + ' | ' + articles[i].prixunite + ' | ' + articles[i].tva %>"><%= articles[i].code %> </option>
+                  <%}%>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-5 col-sm-5 col-xs-12 item form-group">
+                <label>Quantité : </label>
+                <input id="qte" type="text" name="qte" value="" placeholder="Quantité">
+            </div>
+            <br>
+            <div class="col-md-2 col-sm-2 col-xs-2 items form-group">
+                <button class="alim btn btn-sm btn-primary pull-right mymg col-md-12" type="button" name="button">Ajouter</button>
+            </div>
+          </div>
+        </section>
 
 
 
 
-        </div>
+        <table class="table">
+        <thead>
+          <tr>
+            <th>
+              Code article
+            </th>
+            <th>
+              Designation
+            </th>
+            <th>
+              Prix Unitaire
+            </th>
+            <th>
+              Quantite
+            </th>
+            <th>
+              TVA
+            </th>
+            <th>
+              Montant HT
+            </th>
+            <th>
+              Action
+            </th>
+          </tr>
+        </thead>
+        <tbody class="objList">
+
+
+        </tbody>
+
+        </table>
+        <section>
+          <div>
+            <label for="">Montant total : </label>
+            <div id="montant_total">
+
+            </div>
+          </div>
+        </section>
+
+
+
+
+      </div>
               <!-- /.box-body -->
 
       <!--</div>-->
@@ -118,9 +195,30 @@
 
       </div> -->
 
-      <div class="box-body">
+
+      <br>
+      <hr>
+      <!-- <div class="box-body">
         <div id="jsGrid"></div>
-      </div>
+      </div> -->
+
+
+      <!-- <div id="todo-list-example">
+        <input
+          v-model="newTodoText"
+          v-on:keyup.enter="addNewTodo"
+          placeholder="Add a todo"
+        >
+        <ul>
+          <li
+            is="todo-item"
+            v-for="(todo, index) in todos"
+            v-bind:key="todo"
+            v-bind:title="todo"
+            v-on:remove="todos.splice(index, 1)"
+          ></li>
+        </ul>
+      </div> -->
 
 
 
@@ -155,15 +253,103 @@
 <!-- /.content-wrapper -->
 
 
+
+
 <% include footer.ejs %>
 
 
 <script >
 $(document).ready(function(){
+  var $btn = document.getElementById("ok");
+
+  $btn.addEventListener("click",function(){
+   $(".block").disable();
+   console.log("TST click");
+  });
+
   $("#fournisseur").select2({
       placeholder: "Select a state",
       allowClear: true
   });
+  var $alim = $('.alim');
+  var $objList = $('.objList');
+  var $articlesobj = $("#articles");
+  var $qteobj = $("#qte");
+  var totalarticles = [];
+  var totalmontant = 0;
+
+  $alim.on('click', function(){
+
+    var articles = <%- JSON.stringify(articles)%>;
+
+    // console.log($articlesobj.val().split('|')[0]);
+    // console.log($articlesobj.val().split('|')[1]);
+    // console.log($articlesobj.val().split('|')[2]);
+    // console.log($articlesobj.val().split('|')[3]);
+
+    var code = $articlesobj.val().split('|')[0];
+    var des = $articlesobj.val().split('|')[1];
+    var pu = $articlesobj.val().split('|')[2];
+    var tva = $articlesobj.val().split('|')[3];
+    var qte = $qteobj.val();
+
+
+    $objList.append("<tr><td>"+  code +"</td><td>"+ des  +"</td><td>"+  pu  +"</td><td>"+  qte +"</td><td>"+  tva  +"</td><td>" + pu * qte + "</td><td><i class='fa fa-close'></i></td></tr>");
+    totalarticles.push({code: code, designation: des, prixunite: pu, qte: qte, tva: tva, montantht: pu * qte});
+    //console.log(totalarticles);
+    // for(i=0; i< articles.length; i++){
+    //
+    //   $objList.append("<tr><td>"+  articles[i].code +"</td><td>"+ articles[i].designation  +"</td><td>"+  articles[i].prixunite  +"</td><td>"+  articles[i].qte +"</td><td>"+  articles[i].tva  +"</td><td></td><td><i class='fa fa-close'></i></td></tr>");
+    //
+    // }
+    mt = pu * qte;
+    $articlesobj.prop("selectedIndex",0);
+    $qteobj.val("");
+    addto_total(mt);
+
+    $("#montant_total").text(totalmontant);
+
+  });
+
+  var addto_total = function(o){
+
+    totalmontant = totalmontant + o;
+  }
+
+  var minusto_total = function(o){
+    totalmontant = totalmontant - o;
+  }
+
+
+
+  $articlesobj.on('change', function(){
+    console.log($articlesobj.val());
+  });
+
+  $objList.on('click', 'tr td i', function(){
+    var row = [];
+    var $tr = $(this).parent().parent().find("td");
+    // console.log($tr);
+    $tr.each(function(){
+      row.push($(this).text());
+    })
+    // console.log("Valeur Ligne : " + row[5]);
+    // console.log("Avant : " + totalmontant);
+    // totalmontant = totalmontant - Number(row[5]);
+    minusto_total(row[5]);
+    // console.log("Après : " + totalmontant);
+
+    $(this).parent().parent().remove();
+
+    $("#montant_total").text(totalmontant);
+
+  });
+
+// var stat = query.fail();
+// console.log(stat);
+
+//  console.log($.ajax.data());
+
   // $("#subform").css("display", "none");
 
   // $("#validateOne").click(function(){
@@ -234,39 +420,97 @@ $(document).ready(function(){
 
 
 <script>
-    var clients = [
-        // { "Name": "Otto Clay", "Age": 25, "Country": 1, "Address": "Ap #897-1459 Quam Avenue", "Married": false },
-        // { "Name": "Connor Johnston", "Age": 45, "Country": 2, "Address": "Ap #370-4647 Dis Av.", "Married": true },
-        // { "Name": "Lacey Hess", "Age": 29, "Country": 3, "Address": "Ap #365-8835 Integer St.", "Married": false },
-        // { "Name": "Timothy Henson", "Age": 56, "Country": 1, "Address": "911-5143 Luctus Ave", "Married": true },
-        // { "Name": "Ramona Benton", "Age": 32, "Country": 3, "Address": "Ap #614-689 Vehicula Street", "Married": false }
-    ];
+    // var clients = [
+    // //     { "code": "Otto Clay", "MontantHT": 25, "Qte": 1, "designation": "Ap #897-1459 Quam Avenue", "Married": false },
+    // //     { "Name": "Connor Johnston", "Age": 45, "Country": 2, "Address": "Ap #370-4647 Dis Av.", "Married": true },
+    // //     { "Name": "Lacey Hess", "Age": 29, "Country": 3, "Address": "Ap #365-8835 Integer St.", "Married": false },
+    // //     { "Name": "Timothy Henson", "Age": 56, "Country": 1, "Address": "911-5143 Luctus Ave", "Married": true },
+    // //     { "Name": "Ramona Benton", "Age": 32, "Country": 3, "Address": "Ap #614-689 Vehicula Street", "Married": false }
+    // ];
+    //
 
-    var countries = [
-        { Name: "", Id: 0 },
-        { Name: "United States", Id: 1 },
-        { Name: "Canada", Id: 2 },
-        { Name: "United Kingdom", Id: 3 }
-    ];
+    // var query = $.ajax({
+    //         type: "GET",
+    //         url: "/articles/api-get",
+    //         dataType: "json"
+    //         });
+    //
 
-    $("#jsGrid").jsGrid({
-        width: "100%",
-        height: "400px",
 
-        inserting: true,
-        editing: true,
-        sorting: true,
-        paging: true,
-
-        data: clients,
-
-        fields: [
-            { name: "Code article", type: "text", width: 50, validate: "required" },
-            { name: "Désignation article", type: "text", width: 200 },
-            { name: "Prix unitaire", type: "number", width: 50 },
-            { name: "Quantité", type: "number", width: 50 },
-            { name: "Montant HT", type: "number", width: 50 },
-            { type: "control" }
-        ]
-    });
+//   query.success(function(msg){
+//     //  console.log("msg | "+ msg);
+//      articles = msg;
+//     //  console.log("clients | " + clients);
+//     //  for(i=0; i<clients.length; i++){
+//     //    console.log(clients[i]);
+//     //  }
+//
+//     // var countries = [
+//     //     { Name: "", Id: 0 },
+//     //     { Name: "United States", Id: 1 },
+//     //     { Name: "Canada", Id: 2 },
+//     //     { Name: "United Kingdom", Id: 3 }
+//     // ];
+//
+//     $("#jsGrid").jsGrid({
+//         width: "100%",
+//         height: "400px",
+//
+//         inserting: true,
+//         editing: true,
+//         sorting: true,
+//         paging: true,
+//
+//         data: clients,
+//
+//         fields: [
+//             { name: "code", type: "select", items: articles, valueField: "code", textField: "code", width: 50, validate: "required" },
+//             { name: "designation", type: "text", width: 100 },
+//             { name: "prixunite", type: "text", width: 20 },
+//             { name: "Qte", type: "text", width: 20 },
+//             { name: "MontantHT", type: "text", width: 50 },
+//             { name: "tva", type: "number", width: 20 },
+//             { name: "total_TVA", type: "text", width: 20 },
+//             { name: "total_TTC", type: "text", width: 20 },
+//             { type: "control" }
+//         ]
+//     });
+// });
 </script>
+
+
+<!-- <script type="text/javascript">
+
+    Vue.component('todo-item', {
+    template: `
+      <li>
+        <div class="col-md-5">
+          {{ title }}
+        </div>
+          <div class="col-md-5">
+            <button class="btn btn-xs btn-danger" v-on:click="$emit('remove')"><i class='fa fa-close'></i></button>
+          </div>
+
+      </li>
+    `,
+    props: ['title']
+    })
+
+    new Vue({
+    el: '#todo-list-example',
+    data: {
+      newTodoText: '',
+      todos: [
+        'Do the dishes',
+        'Take out the trash',
+        'Mow the lawn'
+      ]
+    },
+    methods: {
+      addNewTodo: function () {
+        this.todos.push(this.newTodoText)
+        this.newTodoText = ''
+      }
+    }
+    })
+</script> -->

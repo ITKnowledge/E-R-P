@@ -112,11 +112,11 @@ var vm = new Vue({
    var self = this;
    console.log('a is: ' + this.a)
    $.ajax({
-       url: '/products',
+       url: '/articles/api-get',
        method: 'GET',
        success: function (d) {
            self.items = d;
-           console.log(self.items);
+           //console.log(self.items);
        },
        error: function (error) {
            alert(JSON.stringify(error));

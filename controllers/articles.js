@@ -22,6 +22,15 @@ router.get('/', isAuthenticated, function(req, res, next) {
 	});
 });
 
+router.get('/api-get', function(req, res, next) {
+  Articles.find(function(err, articles){
+    Tva.find(function(err, tvas){
+			res.header("Access-Control-Allow-Origin", "*");
+			res.json(articles);
+		});
+	});
+});
+
 
 router.get('/add', isAuthenticated, function(req, res, next) {
 	Familles.find(function(err, familles){

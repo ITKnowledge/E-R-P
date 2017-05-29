@@ -71,6 +71,7 @@ var controllers = glob.sync(path.normalize(__dirname + "/") + 'controllers/*.js'
 
   });
 
+console.log(controllers);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -15,6 +15,11 @@ router.get('/', isAuthenticated, function(req, res, next) {
 	});
 });
 
+router.get('/api-get', isAuthenticated, function(req, res, next) {
+  Affaires.find(function(err, affaires){
+		res.json(affaires);
+	});
+});
 
 router.get('/add', isAuthenticated, function(req, res, next) {
 		res.render('addaffaire', {user: req.user, title: "Affaire", affaires: null, mode:"add"});
@@ -76,10 +81,5 @@ router.post('/edit/:id', isAuthenticated, function(req, res, next){
 					});
 
 });
-
-
-
-
-
 
 module.exports = router;

@@ -16,6 +16,12 @@ router.get('/', isAuthenticated, function(req, res, next) {
 
 });
 
+router.get('/api-get', isAuthenticated, function(req, res, next) {
+  Depots.find(function(err, depots){
+		res.json(depots);
+	});
+
+});
 
 router.get('/add', isAuthenticated, function(req, res, next) {
   res.render('adddepot', {user: req.user, title: "Depots", depots: null, mode:"add"});

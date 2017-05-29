@@ -39,9 +39,14 @@ router.get('/', isAuthenticated, function(req, res, next) {
   Familles.find(function(err, familles){
 		res.render('familles', {user: req.user, title: "Familles", familles: familles});
 	});
-
 });
 
+
+router.get('/api-get', isAuthenticated, function(req, res, next) {
+  Familles.find(function(err, familles){
+		res.json(familles);
+	});
+});
 
 router.get('/add', isAuthenticated, function(req, res, next) {
   res.render('addfamille', {user: req.user, title: "Famille", familles: null, mode:"add"});

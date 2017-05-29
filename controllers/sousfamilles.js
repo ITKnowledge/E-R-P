@@ -18,6 +18,14 @@ router.get('/', isAuthenticated, function(req, res, next) {
 });
 
 
+router.get('/api-get', isAuthenticated, function(req, res, next) {
+  Sousfamilles.find(function(err, sousfamilles){
+			res.json(sousfamilles);
+	});
+
+});
+
+
 router.get('/add', isAuthenticated, function(req, res, next) {
 	Familles.find(function(err, familles){
   	res.render('addsousfamille', {user: req.user, title: "Sous famille", sousfamilles: null, mode:"add", familles: familles});

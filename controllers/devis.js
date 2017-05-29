@@ -1,6 +1,7 @@
 var express = require('express');
 var Devis = require('../models/devis');
 var Fournisseur = require('../models/fournisseur');
+var Articles = require('../models/article');
 var router = express.Router();
 
 
@@ -14,20 +15,27 @@ router.get('/', isAuthenticated, function(req, res, next) {
   Devis.find(function(err, devis){
 		res.render('devis', {user: req.user, title: "Devis", devis: devis});
 	});
+});
 
+router.get('/api-get', isAuthenticated, function(req, res, next) {
+  Devis.find(function(err, devis){
+		res.json(devis);
+	});
 });
 
 
 router.get('/add', isAuthenticated, function(req, res, next) {
   Fournisseur.find(function(err, fournisseurs){
-    res.render('adddevis', {user: req.user, title: "Devis", fournisseurs: fournisseurs, devis: null, mode:"add"});
+		Articles.find(function(err, articles){
+			res.render('adddevis', {user: req.user, title: "Devis", articles: articles,fournisseurs: fournisseurs, devis: null, mode:"add"});
+		});
   });
 
 });
 
 router.post('/add', isAuthenticated, function(req, res, next){
 	var devis = new Devis();
-	
+
 	devis.nature = req.body.nature;
 	devis.numero = req.body.numero;
 	devis.datecreation = req.body.datecreation;
