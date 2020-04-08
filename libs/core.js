@@ -39,10 +39,4 @@ Core.prototype.setClients = function (clients) {
     this.clients = clients;
 };
 
-
-
-
-
-
-
 module.exports = Core;
